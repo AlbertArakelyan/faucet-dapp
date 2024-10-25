@@ -22,9 +22,12 @@ contract Faucet {
 
 	// Transaction (can generate state changes) and require gas fee
 	// read-only call, no gas fee
+
+	// To talk to the node in network you can make JSON-RPC http calls
+	// Read here about JSON-RPC: https://ethereum.org/en/developers/docs/apis/json-rpc/
 }
 
-// const instance = await Faucet.deployed(); // (in truffle console)
+// const instance = await Faucet.deployed() // (in truffle console)
 
 // Block info
 // Nonce - a hash when combined with the minHash proofs that
