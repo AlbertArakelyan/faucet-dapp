@@ -4,7 +4,7 @@ pragma solidity >=0.4.22 <0.9.0;
 contract Faucet {
 	uint public numOfFunders;
 	// address[] private funders; -> converted into mapping (kind of converts to [key => value] pairs)
-    mapping(uint => address) private funders;
+    mapping(address => bool) private funders;
 	
 	// private -> can be accesible only within the smart contract
 	// internal -> can be accesible within the smart contract and also derived smart contract
@@ -19,26 +19,30 @@ contract Faucet {
 
     function addFunds() external payable {
         // funders.push(msg.sender); // works with ordinary array, for mappings a bit different
-		uint index = numOfFunders++;
-		funders[index] = msg.sender;
+		address funder = msg.sender;
+		if (!funders[funder]) {
+			uint index = numOfFunders++;
+			funders[funder] = true;
+		}
     }
 
     // function getAllFunders() public view returns (address[] memory) { // this worked for ordinary array
 	// 	return funders;
 	// }
-	function getAllFunders() external view returns (address[] memory) {
-		address[] memory _funders = new address[](numOfFunders);
 
-		for (uint i = 0; i < numOfFunders; i++) {
-			_funders[i] = funders[i];
-		}
+	// function getAllFunders() external view returns (address[] memory) {
+	// 	address[] memory _funders = new address[](numOfFunders);
 
-		return _funders;
-	}
+	// 	for (uint i = 0; i < numOfFunders; i++) {
+	// 		_funders[i] = funders[i];
+	// 	}
 
-	function getFunderAtIndex(uint8 index) external view returns (address) {
-		return funders[index];
-	}
+	// 	return _funders;
+	// }
+
+	// function getFunderAtIndex(uint8 index) external view returns (address) {
+	// 	return funders[index];
+	// }
 
     // pure, view - read-only call, no gas fee
     // view - it indicates that the function will not alter the storage statee in any way
