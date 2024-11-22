@@ -2,7 +2,9 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract Faucet {
-    address[] private funders;
+	uint public numOfFunders;
+	// address[] private funders; -> converted into mapping (kind of converts to [key => value] pairs)
+    mapping(uint => address) private funders;
 	
 	// private -> can be accesible only within the smart contract
 	// internal -> can be accesible within the smart contract and also derived smart contract
@@ -16,16 +18,26 @@ contract Faucet {
     receive() external payable {}
 
     function addFunds() external payable {
-        funders.push(msg.sender);
+        // funders.push(msg.sender); // works with ordinary array, for mappings a bit different
+		uint index = numOfFunders++;
+		funders[index] = msg.sender;
     }
 
-    function getAllFunders() public view returns (address[] memory) {
-		return funders;
+    // function getAllFunders() public view returns (address[] memory) { // this worked for ordinary array
+	// 	return funders;
+	// }
+	function getAllFunders() external view returns (address[] memory) {
+		address[] memory _funders = new address[](numOfFunders);
+
+		for (uint i = 0; i < numOfFunders; i++) {
+			_funders[i] = funders[i];
+		}
+
+		return _funders;
 	}
 
 	function getFunderAtIndex(uint8 index) external view returns (address) {
-		address[] memory _funders = getAllFunders();
-		return _funders[index];
+		return funders[index];
 	}
 
     // pure, view - read-only call, no gas fee
@@ -50,3 +62,6 @@ contract Faucet {
 // Nonce - a hash when combined with the minHash proofs that
 // the block has gone through proof of work (PoW)
 // 8 bytes => 64 bits
+
+
+// TODO write all comments in README with references to appropriate pieces of the code
