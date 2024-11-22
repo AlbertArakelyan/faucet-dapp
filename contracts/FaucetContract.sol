@@ -5,6 +5,7 @@ contract Faucet {
 	uint public numOfFunders;
 	// address[] private funders; -> converted into mapping (kind of converts to [key => value] pairs)
     mapping(address => bool) private funders;
+    mapping(uint => address) private lutFunders; // look up table funders
 	
 	// private -> can be accesible only within the smart contract
 	// internal -> can be accesible within the smart contract and also derived smart contract
@@ -23,6 +24,7 @@ contract Faucet {
 		if (!funders[funder]) {
 			uint index = numOfFunders++;
 			funders[funder] = true;
+			lutFunders[index] = funder;
 		}
     }
 
@@ -30,19 +32,19 @@ contract Faucet {
 	// 	return funders;
 	// }
 
-	// function getAllFunders() external view returns (address[] memory) {
-	// 	address[] memory _funders = new address[](numOfFunders);
+	function getAllFunders() external view returns (address[] memory) {
+		address[] memory _funders = new address[](numOfFunders);
 
-	// 	for (uint i = 0; i < numOfFunders; i++) {
-	// 		_funders[i] = funders[i];
-	// 	}
+		for (uint i = 0; i < numOfFunders; i++) {
+			_funders[i] = lutFunders[i];
+		}
 
-	// 	return _funders;
-	// }
+		return _funders;
+	}
 
-	// function getFunderAtIndex(uint8 index) external view returns (address) {
-	// 	return funders[index];
-	// }
+	function getFunderAtIndex(uint8 index) external view returns (address) {
+		return lutFunders[index];
+	}
 
     // pure, view - read-only call, no gas fee
     // view - it indicates that the function will not alter the storage statee in any way
