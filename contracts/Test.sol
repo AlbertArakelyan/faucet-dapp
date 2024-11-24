@@ -18,4 +18,13 @@ contract Test {
 			data := mload(add(0x90, 0x20)) // points to number 2 in array, as 1 starts at 0x90 and we add 2 bytes
 		}
     }
+
+    function test2() external pure returns (bytes32 data) {
+        assembly {
+            let fmp := mload(0x40)
+            // hello
+            mstore(add(fmp, 0x00), 0x68656C6C6F)
+            data := mload(add(fmp, 0x00))
+        }
+    }
 }
