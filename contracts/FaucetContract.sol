@@ -2,8 +2,10 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 import "./Owned.sol";
+import "./Logger.sol";
+import "./IFaucet.sol";
 
-contract Faucet is Owned {
+contract Faucet is Owned, Logger, IFaucet {
 	uint public numOfFunders;
 	// address[] private funders; -> converted into mapping (kind of converts to [key => value] pairs)
 	mapping(address => bool) private funders;
@@ -28,7 +30,12 @@ contract Faucet is Owned {
 	// which means they can be called via contracts and other txs
 	receive() external payable {}
 
-	function addFunds() external payable {
+  function emitLog() public override pure returns (bytes32) {
+		// override -> we overridee its definition from abstract contract
+		return "Hello World";
+	}
+
+	function addFunds() override external payable {
 		// funders.push(msg.sender); // works with ordinary array, for mappings a bit different
 		address funder = msg.sender;
 		if (!funders[funder]) {
@@ -47,7 +54,7 @@ contract Faucet is Owned {
 	}
 
 	// first will be executed limitWithdraw modifier than the function
-	function withdraw(uint withdrawAmount) external limitWithdraw(withdrawAmount) {
+	function withdraw(uint withdrawAmount) override external limitWithdraw(withdrawAmount) {
 		payable(msg.sender).transfer(withdrawAmount);
 	}
 
