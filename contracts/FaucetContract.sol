@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-contract Faucet {
+import "./Owned.sol";
+
+contract Faucet is Owned {
 	uint public numOfFunders;
 	// address[] private funders; -> converted into mapping (kind of converts to [key => value] pairs)
 	mapping(address => bool) private funders;
@@ -15,7 +17,7 @@ contract Faucet {
 			withdrawAmount <= 100000000000000000,
 			"Cannot withdraw more than 0.1 ether"
 		);
-		_;
+		_; // _ is the body of the function that execited after modifier check e.g. withdraw()
 	}
 
 	// this is a special function
@@ -34,6 +36,14 @@ contract Faucet {
 			funders[funder] = true;
 			lutFunders[index] = funder;
 		}
+	}
+
+	function test1() external onlyOwner {
+		// some managing stuff that only admin should have access to (0x11Fa...)
+	}
+
+	function test2() external onlyOwner {
+		// some managing stuff that only admin should have access to (0x11Fa...)
 	}
 
 	// first will be executed limitWithdraw modifier than the function
