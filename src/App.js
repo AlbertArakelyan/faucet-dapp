@@ -23,7 +23,7 @@ function App() {
         provider = window.ethereum; // newest version
 
         try {
-          await provider.enable();
+          await provider.request({ method: 'eth_requestAccounts' }); // provider.enable() is deprecated
         } catch (error) {
           console.error('User denied account access!');
         }
