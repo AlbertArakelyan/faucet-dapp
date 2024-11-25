@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Web3 from 'web3';
+import detectEthereumProvider from '@metamask/detect-provider'
 
 import './App.css';
 
@@ -17,26 +18,17 @@ function App() {
       // this API allows websites to request users, accounts, read data to blockchain
       // sign messages and transactions
       
-      let provider = null;
-      
-      if (window.ethereum) {
-        provider = window.ethereum; // newest version
+      const provider = await detectEthereumProvider(); // instead of doing many if...else (w.ethereum, w.web3 or localhost)
 
-        try {
-          await provider.request({ method: 'eth_requestAccounts' }); // provider.enable() is deprecated
-        } catch (error) {
-          console.error('User denied account access!');
-        }
-      } else if (window.web3) {
-        provider = window.web3.currentProvider; // only legacy metamask accounts/applications
-      } else if (!process.env.production) {
-        provider = new Web3.providers.HttpProvider('http://localhost:7545'); // Ganache
+      if (provider) {
+        provider.request({ method: 'eth_requestAccounts' });
+        setWeb3Api({
+          web3: new Web3(provider),
+          provider,
+        });
+      } else {
+        console.error('Please install MetaMask!');
       }
-
-      setWeb3Api({
-        web3: new Web3(provider),
-        provider,
-      });
     };
 
     loadProvider();
