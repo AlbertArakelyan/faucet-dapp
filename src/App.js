@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import detectEthereumProvider from '@metamask/detect-provider';
 
-// import { loadContract } from './utils/loadContract';
+import { loadContract } from './utils/loadContract';
 
 import './App.css';
 
