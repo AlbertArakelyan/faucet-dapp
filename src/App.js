@@ -10,6 +10,7 @@ function App() {
   const [web3Api, setWeb3Api] = useState({
     provider: null,
     web3: null,
+    contract: null,
   });
   const [account, setAccount] = useState(null);
 
@@ -23,9 +24,13 @@ function App() {
       const provider = await detectEthereumProvider(); // instead of doing many if...else (w.ethereum, w.web3 or localhost)
 
       if (provider) {
+        const contract = await loadContract('Faucet', provider);
+        console.log(contract);
+        
         setWeb3Api({
           web3: new Web3(provider),
           provider,
+          contract,
         });
       } else {
         console.error('Please install MetaMask!');
@@ -59,7 +64,7 @@ function App() {
                   className="button is-small"
                   onClick={() => web3Api.provider.request({ method: 'eth_requestAccounts' })}
                 >
-                  Connect Collect
+                  Connect Wallet
                 </button>
               )
             }
