@@ -76,4 +76,22 @@ Mapping are kind of kind of converts to [key => value] pairs like `new Map()` in
 \* *with this keyword I can even call external functions, but gas pricess will be higher*
 
 5. "receive()" special function <br>
-The receive()
+The [receive()]() function is a special function. It's called when you make a tx (transaction) that doesn't specify function name to call. <br>
+External functions are part of the contract interface which means they can be called via contracts and other txs (transactions).
+
+6. "override" addition to the function
+override is also a key word which we define next to the function name when we declare the funcion. <br>
+**override** -> we overridee its definition from abstract contract <br>
+\* *Example of abstract contract* - [Logger.sol](./contracts/Logger.sol)
+
+7. Modifiers <br>
+Modifiers are special function which defined next to the name of declared function and they check a certain condition and after satisfying that condition the origianlly declared function will be executed. <br>
+Example of a modifier is [limitWithdraw]() modifier. <br>
+*Note that [_]() (underline) is required at the end of the body of modifier because it is the body of the function that executed after modifier check e.g. [withdraw()]().*
+
+8. Blocks <br>
+Block info <br>
+**Nonce** - a hash when combined with the minHash proofs that the block has gone through proof of work (PoW)
+
+9. JSON-RPC <br>
+To talk to the node in network you can make JSON-RPC http calls. Read here about JSON-RPC: [https://ethereum.org/en/developers/docs/apis/json-rpc](https://ethereum.org/en/developers/docs/apis/json-rpc/)
