@@ -76,7 +76,7 @@ Mapping are kind of kind of converts to [key => value] pairs like `new Map()` in
 \* *with this keyword I can even call external functions, but gas pricess will be higher*
 
 5. "receive()" special function <br>
-The [receive()]() function is a special function. It's called when you make a tx (transaction) that doesn't specify function name to call. <br>
+The [receive()](https://github.com/AlbertArakelyan/faucet-dapp/blob/1-add-all-starter-infromation-to-readme/contracts/FaucetContract.sol#L22) function is a special function. It's called when you make a tx (transaction) that doesn't specify function name to call. <br>
 External functions are part of the contract interface which means they can be called via contracts and other txs (transactions).
 
 6. "override" addition to the function
@@ -86,8 +86,8 @@ override is also a key word which we define next to the function name when we de
 
 7. Modifiers <br>
 Modifiers are special function which defined next to the name of declared function and they check a certain condition and after satisfying that condition the origianlly declared function will be executed. <br>
-Example of a modifier is [limitWithdraw]() modifier. <br>
-*Note that [_]() (underline) is required at the end of the body of modifier because it is the body of the function that executed after modifier check e.g. [withdraw()]().*
+Example of a modifier is [limitWithdraw](https://github.com/AlbertArakelyan/faucet-dapp/blob/1-add-all-starter-infromation-to-readme/contracts/FaucetContract.sol#L14-L20) modifier. <br>
+*Note that [_](https://github.com/AlbertArakelyan/faucet-dapp/blob/1-add-all-starter-infromation-to-readme/contracts/FaucetContract.sol#L19) (underline) is required at the end of the body of modifier because it is the body of the function that executed after modifier check e.g. [withdraw()](https://github.com/AlbertArakelyan/faucet-dapp/blob/1-add-all-starter-infromation-to-readme/contracts/FaucetContract.sol#L46-L48).*
 
 8. Blocks <br>
 Block info <br>
