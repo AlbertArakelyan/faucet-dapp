@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+# Facuet dApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Screenshot](./public/screenshot.png)
 
-## Available Scripts
+<div align="center">
+  <img src="https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white" alt="Ethereum">
+  <img src="https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white" alt="Solidity">
+  <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React">
+</div>
 
-In the project directory, you can run:
+<p align="center" style="width: 90%; margin: 0 auto">
+  My First <b>blockchain</b> app after having a deep understanding about <b>blockchain technologies</b>
+  and after taking a deep course of <b>blockchain</b>, <b>ethereum</b>, <b>Solidity</b> and about
+  blockchain development in general.
+</p>
 
-### `npm start`
+## 🔍 About dApp
+Here you can find a huge starter information about the application also all used approaches in it for
+deeping dive into blockchain development such as
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React App installation guidance, Node.js versions for development
+- What is [Solidity](https://soliditylang.org/)
+- All used approaches during development with [Solidity](https://soliditylang.org/) via a cheatsheet (right in this README)
+- What are [Tuffle](https://archive.trufflesuite.com/) and [Ganache](https://archive.trufflesuite.com/ganache/) and how to install and initialize them
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📦 Installation
+Here you will get to know which Node.js, npm and yarn versions you need for running this project, also
+how to install the project.
 
-### `npm test`
+### Versions
+- node v20.18.0
+- npm v10.8.2
+- yarn v1.22.22
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository
+```bash
+https://github.com/AlbertArakelyan/faucet-dapp.git
+```
 
-### `npm run build`
+2. Install dependencies
+```bash
+yarn
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Run the project
+```bash
+yarn start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### \* Depricatied package
+There is a package for interacting with deployed smart contracts by truffle [@truffle/contract](https://www.npmjs.com/package/@truffle/contract) which is currently deprecated and I couldn't find an alternative for that, and this caused lot's Webpack errors and also fetching a `json` file caused as well.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+For solving this problem I had to create [config-overrides.js](./config-overrides.js) file and add browserified versions of missing **Node.js packages**. More details about the fix you will find inside of [config-overrides.js](./config-overrides.js) file.
 
-### `npm run eject`
+## Solidity
+[Solidity](https://soliditylang.org/) is a programming language for developing Smart Contracts for interacting with blockchain, making crypto transfers and many other things.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Used approaches in Solidity and cheatsheet
+1. Mappings <br>
+Mapping are kind of kind of converts to [key => value] pairs like `new Map()` in **Javascript** or maps in **Go**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Feild access type <br>
+\- **private** -> can be accesible only within the smart contract <br>
+\- **internal** -> can be accesible within the smart contract and also derived smart contract <br>
+\- **public** -> can be called accessed inside of my smart contract and from outside
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. Function access types <br>
+\- **external functions** -> cannot be called outside of my smart contract <br>
+\- **public functions** -> can be called inside of my smart contract and from outside <br>
+\* *external should be used for functions when you expect them to be called from outside, and public when you expect them to be called from inside*
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. Function types <br>
+**pure**, **view** - are read-only call. The opposite of this are function which create **Transactions**. **Transaction** (can generate state changes) and require gas fee.
+\- **view** - it indicates that the function will not alter the storage statee in any way <br>
+\- **pure** - even more strict, indicating that it won't even read the storage state <br>
+\* *with this keyword I can even call external functions, but gas pricess will be higher*
 
-## Learn More
+5. "receive()" special function <br>
+The [receive()](https://github.com/AlbertArakelyan/faucet-dapp/blob/1-add-all-starter-infromation-to-readme/contracts/FaucetContract.sol#L22) function is a special function. It's called when you make a tx (transaction) that doesn't specify function name to call. <br>
+External functions are part of the contract interface which means they can be called via contracts and other txs (transactions).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+6. "override" addition to the function
+override is also a key word which we define next to the function name when we declare the funcion. <br>
+**override** -> we overridee its definition from abstract contract <br>
+\* *Example of abstract contract* - [Logger.sol](./contracts/Logger.sol)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+7. Modifiers <br>
+Modifiers are special function which defined next to the name of declared function and they check a certain condition and after satisfying that condition the origianlly declared function will be executed. <br>
+Example of a modifier is [limitWithdraw](https://github.com/AlbertArakelyan/faucet-dapp/blob/1-add-all-starter-infromation-to-readme/contracts/FaucetContract.sol#L14-L20) modifier. <br>
+*Note that [_](https://github.com/AlbertArakelyan/faucet-dapp/blob/1-add-all-starter-infromation-to-readme/contracts/FaucetContract.sol#L19) (underline) is required at the end of the body of modifier because it is the body of the function that executed after modifier check e.g. [withdraw()](https://github.com/AlbertArakelyan/faucet-dapp/blob/1-add-all-starter-infromation-to-readme/contracts/FaucetContract.sol#L46-L48).*
 
-### Code Splitting
+8. Blocks <br>
+Block info <br>
+**Nonce** - a hash when combined with the minHash proofs that the block has gone through proof of work (PoW)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+9. JSON-RPC <br>
+To talk to the node in network you can make JSON-RPC http calls. Read here about JSON-RPC: [https://ethereum.org/en/developers/docs/apis/json-rpc](https://ethereum.org/en/developers/docs/apis/json-rpc/)
