@@ -6,7 +6,13 @@ export const loadContract = async (name, provider) => {
   const _contract = await contract(Artifact);
   _contract.setProvider(provider);
 
-  const deployedContract = await _contract.deployed(); // we get this from network (in this case Ganache)
+  let deployedContract = null;
+
+  try {
+    deployedContract = await _contract.deployed(); // we get this from network (in this case Ganache)
+  } catch (error) {
+    console.error('Cannot load the contract or you are connecting to the wrong network.', error);
+  }
 
   return deployedContract ;
 };
