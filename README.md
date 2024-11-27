@@ -56,3 +56,24 @@ For solving this problem I had to create [config-overrides.js](./config-override
 [Solidity](https://soliditylang.org/) is a programming language for developing Smart Contracts for interacting with blockchain, making crypto transfers and many other things.
 
 ## Used approaches in Solidity and cheatsheet
+1. Mappings <br>
+Mapping are kind of kind of converts to [key => value] pairs like `new Map()` in **Javascript** or maps in **Go**
+
+2. Feild access type <br>
+\- **private** -> can be accesible only within the smart contract <br>
+\- **internal** -> can be accesible within the smart contract and also derived smart contract <br>
+\- **public** -> can be called accessed inside of my smart contract and from outside
+
+3. Function access types <br>
+\- **external functions** -> cannot be called outside of my smart contract <br>
+\- **public functions** -> can be called inside of my smart contract and from outside <br>
+\* *external should be used for functions when you expect them to be called from outside, and public when you expect them to be called from inside*
+
+4. Function types <br>
+**pure**, **view** - are read-only call. The opposite of this are function which create **Transactions**. **Transaction** (can generate state changes) and require gas fee.
+\- **view** - it indicates that the function will not alter the storage statee in any way <br>
+\- **pure** - even more strict, indicating that it won't even read the storage state <br>
+\* *with this keyword I can even call external functions, but gas pricess will be higher*
+
+5. "receive()" special function <br>
+The receive()
